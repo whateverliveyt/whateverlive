@@ -6,7 +6,7 @@ on:
     - cron: "29 9 * * 1" # SENIN 16:30 WIB
     - cron: "59 9 * * 2" # SELASA 17:00 WIB
     - cron: "59 10 * * 3" # RABU 18:00 WIB
-    - cron: "29 10 * * 4" # KAMIS 17:30 WIB
+    - cron: "20 4 * * 4" # KAMIS 17:30 WIB
     - cron: "59 9 * * 5" # JUMAT 17:00 WIB
     - cron: "59 10 * * 6" # SABTU 18:00 WIB
     - cron: "29 9 * * 0" # MINGGU 16:30 WIB
