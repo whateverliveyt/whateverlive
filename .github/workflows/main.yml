@@ -3,13 +3,7 @@ name: Live Streaming – RABU - MINGGU
 on:
   workflow_dispatch:
   schedule:
-  #  - cron: "30 9 * * 1"  # Senin 16:30 WIB
-  #  - cron: "0 10 * * 2"  # Selasa 17:00 WIB
-  #  - cron: "0 11 * * 3"  # Rabu 18:00 WIB
-  #  - cron: "45 1 * * 4" # Kamis 17:30 WIB
-  #  - cron: "0 10 * * 5"  # Jumat 17:00 WIB
-  #  - cron: "0 11 * * 6"  # Sabtu 18:00 WIB
-  #  - cron: "30 9 * * 0"  # Minggu 16:30 WIB
+    - cron: "15 1 * * 4"
 
 jobs:
   live-stream:
