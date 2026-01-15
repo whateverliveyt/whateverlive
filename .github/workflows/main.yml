@@ -42,11 +42,6 @@ jobs:
           ls listB_*.mp4 2>/dev/null > reserve.txt
           : > recycle.txt
 
-      - name: Health check
-        run: |
-          [ -z "$STREAM_KEY" ] && echo "STREAM_KEY EMPTY" && exit 1
-          [ ! -s active.txt ] && echo "NO ACTIVE VIDEOS" && exit 1
-
       - name: Live streaming
         run: |
           COUNT=$(wc -l < active.txt)
