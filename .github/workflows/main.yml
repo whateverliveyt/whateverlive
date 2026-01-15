@@ -80,7 +80,7 @@ jobs:
               echo "file '$PWD/$f'" >> playlist.txt
             done < play_order.txt
 
-            ffmpeg -re -f concat -safe 0 -i playlist.txt               -filter:a "volume=${GAIN}dB"               -filter:v "eq=brightness=${BRIGHT}:saturation=${SAT}"               -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k               -pix_fmt yuv420p -g 50               -c:a aac -b:a 128k -ar 44100               -f flv "rtmp://a.rtmp.youtube.com/live2/$STREAM_KEY"
+            ffmpeg -re -f concat -safe 0 -i playlist.txt -filter:a "volume=${GAIN}dB" -filter:v "eq=brightness=${BRIGHT}:saturation=${SAT}" -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv "rtmp://a.rtmp.youtube.com/live2/$STREAM_KEY"
 
             LOOP=$((LOOP+1))
           done
