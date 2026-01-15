@@ -30,6 +30,12 @@ jobs:
           done
           wget -q https://github.com/whateverliveyt/whatever/releases/download/v1.0/intro.mp4 || true
 
+          - name: Debug downloaded files
+           run: |
+           ls -lh
+           echo "List A count:"
+           ls listA_*.mp4 2>/dev/null | wc -l
+
       - name: Init state
         run: |
           ls listA_*.mp4 2>/dev/null > active.txt
