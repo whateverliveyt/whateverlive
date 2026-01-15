@@ -3,7 +3,7 @@ name: Live Streaming – RABU - MINGGU
 on:
   workflow_dispatch:
   schedule:
-    - cron: "15 1 * * 4"
+    - cron: "15 1 * * 4" # Kamis 08:15 WIB
 
 jobs:
   live-stream:
@@ -30,11 +30,11 @@ jobs:
           done
           wget -q https://github.com/whateverliveyt/whatever/releases/download/v1.0/intro.mp4 || true
 
-          - name: Debug downloaded files
-           run: |
-           ls -lh
-           echo "List A count:"
-           ls listA_*.mp4 2>/dev/null | wc -l
+      - name: Debug downloaded files
+        run: |
+          ls -lh
+          echo "List A count:"
+          ls listA_*.mp4 2>/dev/null | wc -l
 
       - name: Init state
         run: |
@@ -43,15 +43,11 @@ jobs:
           : > recycle.txt
 
       - name: Health check
-        env:
-          STREAM_KEY: ${{ secrets.STREAM_KEY }}
         run: |
-          [ -z "$STREAM_KEY" ] && exit 1
-          [ ! -s active.txt ] && exit 1
+          [ -z "$STREAM_KEY" ] && echo "STREAM_KEY EMPTY" && exit 1
+          [ ! -s active.txt ] && echo "NO ACTIVE VIDEOS" && exit 1
 
       - name: Live streaming
-        env:
-          STREAM_KEY: ${{ secrets.STREAM_KEY }}
         run: |
           COUNT=$(wc -l < active.txt)
 
@@ -80,7 +76,14 @@ jobs:
               echo "file '$PWD/$f'" >> playlist.txt
             done < play_order.txt
 
-            ffmpeg -re -f concat -safe 0 -i playlist.txt -filter:a "volume=${GAIN}dB" -filter:v "eq=brightness=${BRIGHT}:saturation=${SAT}" -c:v libx264 -preset veryfast -maxrate 3000k -bufsize 6000k -pix_fmt yuv420p -g 50 -c:a aac -b:a 128k -ar 44100 -f flv "rtmp://a.rtmp.youtube.com/live2/$STREAM_KEY"
+            ffmpeg -re -f concat -safe 0 -i playlist.txt \
+              -filter:a "volume=${GAIN}dB" \
+              -filter:v "eq=brightness=${BRIGHT}:saturation=${SAT}" \
+              -c:v libx264 -preset veryfast \
+              -maxrate 3000k -bufsize 6000k \
+              -pix_fmt yuv420p -g 50 \
+              -c:a aac -b:a 128k -ar 44100 \
+              -f flv "rtmp://a.rtmp.youtube.com/live2/$STREAM_KEY"
 
             LOOP=$((LOOP+1))
           done
